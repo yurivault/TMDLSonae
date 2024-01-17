@@ -1,0 +1,27 @@
+﻿model Model
+	culture: en-US
+
+annotation ClientCompatibilityLevel = 400
+
+annotation TabularEditor_SerializeOptions = {"IgnoreInferredObjects":true,"IgnoreInferredProperties":true,"IgnoreTimestamps":true,"SplitMultilineStrings":true,"PrefixFilenames":false,"LocalTranslations":false,"LocalPerspectives":false,"LocalRelationships":false,"Levels":["Data Sources","Perspectives","Relationships","Roles","Shared Expressions","Tables","Tables/Calculation Items","Tables/Columns","Tables/Hierarchies","Tables/Measures","Tables/Partitions","Translations"]}
+
+ref table Customer
+
+ref table Date
+
+ref table Geography
+
+ref table Product
+
+ref table 'Product Category'
+
+ref table 'Product Subcategory'
+
+ref table 'Internet Sales'
+
+ref role 'Internet Sales Manager'
+
+ref role 'Internet Sales US'
+
+ref role 'Internet Sales Administrator'
+

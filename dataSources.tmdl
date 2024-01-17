@@ -1,0 +1,6 @@
+﻿dataSource 'Adventure Works DB from SQL' = Provider
+	connectionString: Provider=SQLNCLI11.1;Data Source=localhost;Integrated Security=SSPI;Initial Catalog=AdventureWorksDW2014
+	impersonationMode: ImpersonateServiceAccount
+
+	annotation ConnectionEditUISource = SqlServer
+
