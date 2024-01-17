@@ -1,0 +1,875 @@
+﻿table Date
+	dataCategory: Time
+
+	measure 'Days Current Quarter to Date' = COUNTROWS( DATESQTD( 'Date'[Date]))
+
+	measure 'Days in Current Quarter' = COUNTROWS( DATESBETWEEN( 'Date'[Date], STARTOFQUARTER( LASTDATE('Date'[Date])), ENDOFQUARTER('Date'[Date])))
+
+	column Date
+		dataType: DateTime
+		isKey
+		formatString = General Date
+		sourceProviderType: DBDate
+		sourceColumn: FullDateAlternateKey
+
+	column 'Day Number of Week'
+		dataType: Int64
+		sourceProviderType: UnsignedTinyInt
+		sourceColumn: DayNumberOfWeek
+
+	column 'Day Name'
+		dataType: String
+		sourceProviderType: WChar
+		sourceColumn: EnglishDayNameOfWeek
+
+	column 'Day of Month'
+		dataType: Int64
+		sourceProviderType: UnsignedTinyInt
+		sourceColumn: DayNumberOfMonth
+
+	column 'Day of Year'
+		dataType: Int64
+		sourceProviderType: SmallInt
+		sourceColumn: DayNumberOfYear
+
+	column 'Week Number of Year'
+		dataType: Int64
+		sourceProviderType: UnsignedTinyInt
+		sourceColumn: WeekNumberOfYear
+
+	column 'Month Name'
+		dataType: String
+		sourceProviderType: WChar
+		sourceColumn: EnglishMonthName
+
+	column Month
+		dataType: Int64
+		sourceProviderType: UnsignedTinyInt
+		sourceColumn: MonthNumberOfYear
+
+	column 'Calendar Quarter'
+		dataType: Int64
+		sourceProviderType: UnsignedTinyInt
+		sourceColumn: CalendarQuarter
+
+	column 'Calendar Year'
+		dataType: Int64
+		sourceProviderType: SmallInt
+		sourceColumn: CalendarYear
+
+	column 'Calendar Semester'
+		dataType: Int64
+		sourceProviderType: UnsignedTinyInt
+		sourceColumn: CalendarSemester
+
+	column 'Fiscal Quarter'
+		dataType: Int64
+		sourceProviderType: UnsignedTinyInt
+		sourceColumn: FiscalQuarter
+
+	column 'Fiscal Year'
+		dataType: Int64
+		sourceProviderType: SmallInt
+		sourceColumn: FiscalYear
+
+	column 'Fiscal Semester'
+		dataType: Int64
+		sourceProviderType: UnsignedTinyInt
+		sourceColumn: FiscalSemester
+
+	column 'Month Calendar' = RIGHT(" " & FORMAT([Month],"#0"), 2) & " - " & [Month Name]
+		dataType: String
+		isDataTypeInferred
+
+	column 'Day of Week' = RIGHT(" " & FORMAT([Day Number Of Week],"#0"), 2) & " - " & [Day Name]
+		dataType: String
+		isDataTypeInferred
+
+	hierarchy Calendar
+
+		level Year
+			column: 'Calendar Year'
+
+		level Semester
+			column: 'Calendar Semester'
+
+		level Quarter
+			column: 'Calendar Quarter'
+
+		level Month
+			column: 'Month Calendar'
+
+		level Day
+			column: 'Day of Month'
+
+	hierarchy Fiscal
+
+		level Year
+			column: 'Fiscal Year'
+
+		level Semester
+			column: 'Fiscal Semester'
+
+		level Quarter
+			column: 'Fiscal Quarter'
+
+		level Month
+			column: 'Month Calendar'
+
+		level Day
+			column: 'Day of Month'
+
+	hierarchy 'Production Calendar'
+
+		level Year
+			column: 'Calendar Year'
+
+		level Week
+			column: 'Week Number of Year'
+
+		level Day
+			column: 'Day of Week'
+
+	partition Date = Query
+		dataView: Full
+		query =  SELECT [dbo].[DimDate].[FullDateAlternateKey],[dbo].[DimDate].[DayNumberOfWeek],[dbo].[DimDate].[EnglishDayNameOfWeek],[dbo].[DimDate].[DayNumberOfMonth],[dbo].[DimDate].[DayNumberOfYear],[dbo].[DimDate].[WeekNumberOfYear],[dbo].[DimDate].[EnglishMonthName],[dbo].[DimDate].[MonthNumberOfYear],[dbo].[DimDate].[CalendarQuarter],[dbo].[DimDate].[CalendarYear],[dbo].[DimDate].[CalendarSemester],[dbo].[DimDate].[FiscalQuarter],[dbo].[DimDate].[FiscalYear],[dbo].[DimDate].[FiscalSemester] FROM [dbo].[DimDate] 
+		dataSource: 'Adventure Works DB from SQL'
+
+		annotation TableWidgetSerialization =
+				<?xml version="1.0" encoding="UTF-16"?><Gemini xmlns="TableWidgetSerialization"><AnnotationContent><![CDATA[<?xml version="1.0"?>
+				<TableWidgetGridSerialization xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+				  <ColumnSuggestedType />
+				  <ColumnFormat />
+				  <ColumnAccuracy />
+				  <ColumnCurrencySymbol />
+				  <ColumnPositivePattern />
+				  <ColumnNegativePattern />
+				  <ColumnWidths>
+				    <item>
+				      <key>
+				        <string>DateKey</string>
+				      </key>
+				      <value>
+				        <int>153</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>FullDateAlternateKey</string>
+				      </key>
+				      <value>
+				        <int>132</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>DayNumberOfWeek</string>
+				      </key>
+				      <value>
+				        <int>125</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>EnglishDayNameOfWeek</string>
+				      </key>
+				      <value>
+				        <int>148</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>SpanishDayNameOfWeek</string>
+				      </key>
+				      <value>
+				        <int>152</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>FrenchDayNameOfWeek</string>
+				      </key>
+				      <value>
+				        <int>148</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>DayNumberOfMonth</string>
+				      </key>
+				      <value>
+				        <int>128</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>DayNumberOfYear</string>
+				      </key>
+				      <value>
+				        <int>120</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>WeekNumberOfYear</string>
+				      </key>
+				      <value>
+				        <int>128</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>EnglishMonthName</string>
+				      </key>
+				      <value>
+				        <int>120</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>SpanishMonthName</string>
+				      </key>
+				      <value>
+				        <int>124</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>FrenchMonthName</string>
+				      </key>
+				      <value>
+				        <int>120</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>MonthNumberOfYear</string>
+				      </key>
+				      <value>
+				        <int>131</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>CalendarQuarter</string>
+				      </key>
+				      <value>
+				        <int>111</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>CalendarYear</string>
+				      </key>
+				      <value>
+				        <int>95</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>CalendarSemester</string>
+				      </key>
+				      <value>
+				        <int>118</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>FiscalQuarter</string>
+				      </key>
+				      <value>
+				        <int>94</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>FiscalYear</string>
+				      </key>
+				      <value>
+				        <int>78</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>FiscalSemester</string>
+				      </key>
+				      <value>
+				        <int>101</int>
+				      </value>
+				    </item>
+				  </ColumnWidths>
+				  <ColumnDisplayIndex>
+				    <item>
+				      <key>
+				        <string>DateKey</string>
+				      </key>
+				      <value>
+				        <int>0</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>FullDateAlternateKey</string>
+				      </key>
+				      <value>
+				        <int>1</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>DayNumberOfWeek</string>
+				      </key>
+				      <value>
+				        <int>2</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>EnglishDayNameOfWeek</string>
+				      </key>
+				      <value>
+				        <int>3</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>SpanishDayNameOfWeek</string>
+				      </key>
+				      <value>
+				        <int>4</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>FrenchDayNameOfWeek</string>
+				      </key>
+				      <value>
+				        <int>5</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>DayNumberOfMonth</string>
+				      </key>
+				      <value>
+				        <int>6</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>DayNumberOfYear</string>
+				      </key>
+				      <value>
+				        <int>7</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>WeekNumberOfYear</string>
+				      </key>
+				      <value>
+				        <int>8</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>EnglishMonthName</string>
+				      </key>
+				      <value>
+				        <int>9</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>SpanishMonthName</string>
+				      </key>
+				      <value>
+				        <int>10</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>FrenchMonthName</string>
+				      </key>
+				      <value>
+				        <int>11</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>MonthNumberOfYear</string>
+				      </key>
+				      <value>
+				        <int>12</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>CalendarQuarter</string>
+				      </key>
+				      <value>
+				        <int>13</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>CalendarYear</string>
+				      </key>
+				      <value>
+				        <int>14</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>CalendarSemester</string>
+				      </key>
+				      <value>
+				        <int>15</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>FiscalQuarter</string>
+				      </key>
+				      <value>
+				        <int>16</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>FiscalYear</string>
+				      </key>
+				      <value>
+				        <int>17</int>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>FiscalSemester</string>
+				      </key>
+				      <value>
+				        <int>18</int>
+				      </value>
+				    </item>
+				  </ColumnDisplayIndex>
+				  <ColumnFrozen />
+				  <ColumnChecked>
+				    <item>
+				      <key>
+				        <string>DateKey</string>
+				      </key>
+				      <value>
+				        <boolean>false</boolean>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>SpanishDayNameOfWeek</string>
+				      </key>
+				      <value>
+				        <boolean>false</boolean>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>FrenchDayNameOfWeek</string>
+				      </key>
+				      <value>
+				        <boolean>false</boolean>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>SpanishMonthName</string>
+				      </key>
+				      <value>
+				        <boolean>false</boolean>
+				      </value>
+				    </item>
+				    <item>
+				      <key>
+				        <string>FrenchMonthName</string>
+				      </key>
+				      <value>
+				        <boolean>false</boolean>
+				      </value>
+				    </item>
+				  </ColumnChecked>
+				  <ColumnFilter />
+				  <SelectionFilter />
+				  <FilterParameters />
+				  <IsSortDescending>false</IsSortDescending>
+				</TableWidgetGridSerialization>]]></AnnotationContent></Gemini>
+
+	annotation _TM_ExtProp_QueryDefinition =  SELECT [dbo].[DimDate].[FullDateAlternateKey],[dbo].[DimDate].[DayNumberOfWeek],[dbo].[DimDate].[EnglishDayNameOfWeek],[dbo].[DimDate].[DayNumberOfMonth],[dbo].[DimDate].[DayNumberOfYear],[dbo].[DimDate].[WeekNumberOfYear],[dbo].[DimDate].[EnglishMonthName],[dbo].[DimDate].[MonthNumberOfYear],[dbo].[DimDate].[CalendarQuarter],[dbo].[DimDate].[CalendarYear],[dbo].[DimDate].[CalendarSemester],[dbo].[DimDate].[FiscalQuarter],[dbo].[DimDate].[FiscalYear],[dbo].[DimDate].[FiscalSemester] FROM [dbo].[DimDate] 
+
+	annotation _TM_ExtProp_DbTableName = DimDate
+
+	annotation _TM_ExtProp_DbSchemaName = dbo
+
+	annotation TableWidgetSerialization =
+			<?xml version="1.0" encoding="UTF-16"?><Gemini xmlns="TableWidgetSerialization"><AnnotationContent><![CDATA[<?xml version="1.0"?>
+			<TableWidgetGridSerialization xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			  <ColumnSuggestedType />
+			  <ColumnFormat />
+			  <ColumnAccuracy />
+			  <ColumnCurrencySymbol />
+			  <ColumnPositivePattern />
+			  <ColumnNegativePattern />
+			  <ColumnWidths>
+			    <item>
+			      <key>
+			        <string>DateKey</string>
+			      </key>
+			      <value>
+			        <int>153</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>FullDateAlternateKey</string>
+			      </key>
+			      <value>
+			        <int>132</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>DayNumberOfWeek</string>
+			      </key>
+			      <value>
+			        <int>125</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>EnglishDayNameOfWeek</string>
+			      </key>
+			      <value>
+			        <int>148</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>SpanishDayNameOfWeek</string>
+			      </key>
+			      <value>
+			        <int>152</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>FrenchDayNameOfWeek</string>
+			      </key>
+			      <value>
+			        <int>148</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>DayNumberOfMonth</string>
+			      </key>
+			      <value>
+			        <int>128</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>DayNumberOfYear</string>
+			      </key>
+			      <value>
+			        <int>120</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>WeekNumberOfYear</string>
+			      </key>
+			      <value>
+			        <int>128</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>EnglishMonthName</string>
+			      </key>
+			      <value>
+			        <int>120</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>SpanishMonthName</string>
+			      </key>
+			      <value>
+			        <int>124</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>FrenchMonthName</string>
+			      </key>
+			      <value>
+			        <int>120</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>MonthNumberOfYear</string>
+			      </key>
+			      <value>
+			        <int>131</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>CalendarQuarter</string>
+			      </key>
+			      <value>
+			        <int>111</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>CalendarYear</string>
+			      </key>
+			      <value>
+			        <int>95</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>CalendarSemester</string>
+			      </key>
+			      <value>
+			        <int>118</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>FiscalQuarter</string>
+			      </key>
+			      <value>
+			        <int>94</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>FiscalYear</string>
+			      </key>
+			      <value>
+			        <int>78</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>FiscalSemester</string>
+			      </key>
+			      <value>
+			        <int>101</int>
+			      </value>
+			    </item>
+			  </ColumnWidths>
+			  <ColumnDisplayIndex>
+			    <item>
+			      <key>
+			        <string>DateKey</string>
+			      </key>
+			      <value>
+			        <int>0</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>FullDateAlternateKey</string>
+			      </key>
+			      <value>
+			        <int>1</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>DayNumberOfWeek</string>
+			      </key>
+			      <value>
+			        <int>2</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>EnglishDayNameOfWeek</string>
+			      </key>
+			      <value>
+			        <int>3</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>SpanishDayNameOfWeek</string>
+			      </key>
+			      <value>
+			        <int>4</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>FrenchDayNameOfWeek</string>
+			      </key>
+			      <value>
+			        <int>5</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>DayNumberOfMonth</string>
+			      </key>
+			      <value>
+			        <int>6</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>DayNumberOfYear</string>
+			      </key>
+			      <value>
+			        <int>7</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>WeekNumberOfYear</string>
+			      </key>
+			      <value>
+			        <int>8</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>EnglishMonthName</string>
+			      </key>
+			      <value>
+			        <int>9</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>SpanishMonthName</string>
+			      </key>
+			      <value>
+			        <int>10</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>FrenchMonthName</string>
+			      </key>
+			      <value>
+			        <int>11</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>MonthNumberOfYear</string>
+			      </key>
+			      <value>
+			        <int>12</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>CalendarQuarter</string>
+			      </key>
+			      <value>
+			        <int>13</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>CalendarYear</string>
+			      </key>
+			      <value>
+			        <int>14</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>CalendarSemester</string>
+			      </key>
+			      <value>
+			        <int>15</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>FiscalQuarter</string>
+			      </key>
+			      <value>
+			        <int>16</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>FiscalYear</string>
+			      </key>
+			      <value>
+			        <int>17</int>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>FiscalSemester</string>
+			      </key>
+			      <value>
+			        <int>18</int>
+			      </value>
+			    </item>
+			  </ColumnDisplayIndex>
+			  <ColumnFrozen />
+			  <ColumnChecked>
+			    <item>
+			      <key>
+			        <string>DateKey</string>
+			      </key>
+			      <value>
+			        <boolean>false</boolean>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>SpanishDayNameOfWeek</string>
+			      </key>
+			      <value>
+			        <boolean>false</boolean>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>FrenchDayNameOfWeek</string>
+			      </key>
+			      <value>
+			        <boolean>false</boolean>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>SpanishMonthName</string>
+			      </key>
+			      <value>
+			        <boolean>false</boolean>
+			      </value>
+			    </item>
+			    <item>
+			      <key>
+			        <string>FrenchMonthName</string>
+			      </key>
+			      <value>
+			        <boolean>false</boolean>
+			      </value>
+			    </item>
+			  </ColumnChecked>
+			  <ColumnFilter />
+			  <SelectionFilter />
+			  <FilterParameters />
+			  <IsSortDescending>false</IsSortDescending>
+			</TableWidgetGridSerialization>]]></AnnotationContent></Gemini>
+

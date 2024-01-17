@@ -1,0 +1,5 @@
+﻿role 'Internet Sales US'
+	modelPermission: Read
+
+	tablePermission Geography = Geography[Country Region Code] = "US"
+
