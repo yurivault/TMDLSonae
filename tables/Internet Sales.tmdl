@@ -43,6 +43,8 @@
 
 	measure 'Internet Current Quarter Sales' = TOTALQTD([Internet Total Sales],'Date'[Date])
 
+	measure 'Internet Current AVG Sales' = AVG([Internet Total Sales],'Date'[Date])
+
 	measure 'Internet Previous Quarter Sales Proportion to QTD' = [Internet Previous Quarter Sales]*([Days Current Quarter to Date]/[Days In Current Quarter])
 
 	measure 'Internet Current Quarter Sales Performance' = IFERROR([Internet Current Quarter Sales]/[Internet Previous Quarter Sales Proportion to QTD],BLANK())
