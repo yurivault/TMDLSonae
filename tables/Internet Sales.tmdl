@@ -23,11 +23,6 @@
 
 		annotation Format = <Format Format="Currency" Accuracy="2" ThousandSeparator="True"><Currency LCID="1033" DisplayName="$ English (United States)" Symbol="$" PositivePattern="0" NegativePattern="0" /></Format>
 
-	measure 'Internet Total Tax Amt' = SUM([Tax Amt])
-		formatString = \$#,0.00;(\$#,0.00);\$#,0.00
-
-		annotation Format = <Format Format="Currency" Accuracy="2" ThousandSeparator="True"><Currency LCID="1033" DisplayName="$ English (United States)" Symbol="$" PositivePattern="0" NegativePattern="0" /></Format>
-
 	measure 'Internet Total Freight' = SUM([Freight])
 		formatString = \$#,0.00;(\$#,0.00);\$#,0.00
 
