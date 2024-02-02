@@ -8,7 +8,7 @@
 
 	measure 'Internet Total Discount Amount' = SUM([Discount Amount])
 
-	measure 'Internet Total Product Cost' = SUM([Total Product Cost])
+	measure 'Internet Total Product Cost' = SUM([Total Product Cose])
 		formatString = \$#,0.00;(\$#,0.00);\$#,0.00
 
 		annotation Format = <Format Format="Currency" Accuracy="2" ThousandSeparator="True"><Currency LCID="1033" DisplayName="$ English (United States)" Symbol="$" PositivePattern="0" NegativePattern="0" /></Format>
